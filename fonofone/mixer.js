@@ -192,16 +192,18 @@ export default {
 
       this.pistes = [];
     },
-    fin_piste: function (piste) { 
+    fin_piste: function (piste) {
+
+      // Toujours marquer la piste comme inactive
+      piste.actif = false;
 
       // Ne pas arreter si le metronome est actif, sinon un drag de l'oreille lance d'autres sons
       if(this.modules.metronome.actif) return;
 
-      piste.actif = false;
       this.etat.playhead_pos = 0;
       this.etat.jouer = false;
       if(!this.etat.loop) return this.arreter();
-     
+
       // Si le metronome n'est pas actif et que toutes les pistes sont terminees, relancer
       if(!this.modules.metronome.actif && !_.some(this.pistes, p => p.actif)) this.jouer();
     },
@@ -280,8 +282,19 @@ export default {
     console.log("Mixer mounted", this.set_reverb_sub_master(0));
     this.$watch('modules.metronome', (v, v_old) => {
 
-      // reset syncope quand on arrete
-      if(!v.actif) { this.prochaine_syncope_courte = true }
+      // Quand le metronome est desactive
+      if(!v.actif) {
+        // reset syncope
+        this.prochaine_syncope_courte = true;
+
+        // Annuler le prochain timeout du metronome
+        clearTimeout(this.prochaine_pulsation);
+
+        // Si la boucle est active et qu'aucune piste n'est en cours, relancer le son
+        if(this.etat.loop && !_.some(this.pistes, p => p.actif)) {
+          this.jouer();
+        }
+      }
 
       else if((v_old && !v_old.actif) && v.actif && this.etat.jouer) this.jouer_metronome();
     });
