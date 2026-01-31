@@ -950,12 +950,13 @@ window.Fonoimage = class Fonoimage {
                 this.get_fonofone(zone).set_reverb_sub_master(proximite);
 
 
-                //Stop sound if the zone is not in the listening area
+                //Stop sound if the zone is not in the listening area (spatial audio)
                 if (proximite == 0 && this.get_fonofone(zone).get_is_playing()) {
 
                   this.get_fonofone(zone).arreter();
                 }
-                else if (proximite > 0 && !this.get_fonofone(zone).get_is_playing()) {
+                // Restart sound if proximity > 0, sound is not playing, AND user wants it to play (respects loop state)
+                else if (proximite > 0 && !this.get_fonofone(zone).get_is_playing() && zone.etat_jouer) {
 
                   this.get_fonofone(zone).jouer();
 
