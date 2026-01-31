@@ -1,0 +1,315 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package "Fonofone" {
+  class ApplicationFonofone {
+    + props: ['id', 'archive', 'ctx_audio', 'noeud_sortie', 'integration']
+    + mixins: [Filepond]
+    + components: {
+        "mixer": Mixer,
+        "filtre": Filtre,
+        "metronome": Metronome,
+        "reverberation": Reverberation,
+        "selecteur": Selecteur,
+        "volume": Volume,
+        "vitesse": Vitesse,
+        "arpegiateur": Arpegiateur
+      },
+    + methods: {
+        exporter(),
+        serialiser(),
+        importer(),
+        get_obj_config(),
+        charger_banque(),
+        charger_source(),
+        supprimer_source(),
+        charger_configuration_mixer(),
+        charger_configuration_modules(),
+        dupliquer_son_nouvel_id(),
+        ajouter_son(),
+        telecharger_source(),
+        toggle_dossier(),
+        reset(),
+        get_etat_solo(),
+        set_solo(),
+        mute(),
+        unmute(),
+        toggle_pause(),
+        jouer(),
+        arreter(),
+        toggle_affichage_fonoimage(),
+        toggle_ecran(),
+        paint(),
+        jouer_source(),
+        creer_son(),
+        reset_selecteur(),
+        set_plage(),
+        get_enregistreur(),
+        toggle_enregistrement(),
+        remonter_au_dossier_parent(),
+        trouver_dossier(),
+        get_next_sequence(),
+        update_etat()
+      },
+    + computed: {
+        source_active(),
+        chemin_actif(),
+        dossier_actif(),
+      },
+    + created(),
+    + mounted(),
+  }
+
+  class Mixer {
+    + props: ["integration", "ctx_audio", "modules", "noeud_sortie"]
+    + mixins: [Wavesurfer, GrapheAudio]
+    + components: {"piste": Piste}
+    + data(): {...}
+    + methods: {
+        serialiser(),
+        charger_son(),
+        lire_son(),
+        creer_buffer_inverse(),
+        toggle_pause(),
+        toggle_mode_fonoimage(),
+        toggle_mode_solo(),
+        jouer(),
+        _jouer(),
+        arreter(),
+        fin_piste(),
+        jouer_metronome(),
+        toggle_sens(),
+        set_sens(),
+        toggle_loop(),
+        set_loop(),
+        crop(),
+        paint(),
+        get_prochaine_sequence_arpegiateur(),
+        pulsation(),
+      },
+    + computed: {
+        debut_region(),
+        fin_region(),
+        longueur_region(),
+        waveform_id(),
+      },
+    + created(),
+    + mounted(),
+  }
+
+  class Piste {
+    + props: ["debut", "fin", "contexte", "buffer", "inverse", "noeud", "vitesse", "arpegiateur"]
+    + data(): {...}
+    + methods: {
+        fin_piste(),
+        update_vitesse(),
+        set_vitesse(),
+        apparition(),
+        apres_apparition(),
+      },
+    + computed: {
+        longueur(),
+        longueur_abs(),
+        ttl(),
+        debut_abs(),
+      },
+    + created(),
+    + mounted(),
+    + beforeDestroy(),
+  },
+
+  ApplicationFonofone *-- Mixer
+  ApplicationFonofone *-- Piste
+}
+
+package "Modules" {
+  class Filtre {
+    + mixins: [Utils]
+    + data(): {...}
+    + methods: {
+        charger_props(),
+        drag(),
+        update(),
+      },
+    + mounted(),
+  }
+
+  class Metronome {
+    + mixins: [Utils]
+    + data(): {...}
+    + methods: {
+        charger_props(),
+        drag(),
+        update_position_point_arc(),
+        update(),
+        update_syncope(),
+        update_bpm_manuel(),
+        update_font_size_bpm(),
+      },
+    + computed: {
+        x_controlleur_aleatoire(),
+        text_bpm(),
+      }.
+    + mounted(),
+  }
+
+  class Reverberation {
+    + mixins: [Utils]
+    + data(): {...}
+    + methods: {
+        charger_props(),
+        drag(),
+        update_son(),
+        update(),
+      },
+  }
+
+  class Selecteur {
+    + mixins: [Utils]
+    + data(): {...}
+    + methods: {
+        charger_props(),
+        set_plage(),
+        update(),
+        drag(),
+        x_cote_gauche(),
+        x_cote_droit(),
+        update_position_controlleur(),
+        mixer_a_svg(),
+      },
+    + mounted(),
+  }
+
+  class Volume {
+    + mixins: [Utils]
+    --
+        charger_props(),
+        drag(),
+        toggle_aimant(),
+        update(),
+        ..common..
+         + data(): {...}
+  }
+
+  class Vitesse {
+    mixins: [Utils]
+    template: html
+    --
+        charger_props(),
+        drag(),
+        toggle_aimant(),
+        update(),
+        change_mode(),
+        x_coche(),
+        hauteur_coche(),
+        largeur_coche(),
+        coche_blanche(),
+        i_affichage(),
+    
+    ..computed..
+        min_x(),
+        max_x(),
+        affichage_mode(),
+        nb_divisions(),
+    ..common..
+    + data(): {...}
+      
+  }
+
+  class Arpegiateur {
+    + mixins: [Utils]
+    --
+        charger_props(),
+        drag(),
+        toggle_aimant(),
+        update(),
+        y(),
+        get_next_colonne(),
+        flash(),
+        change_mode(),
+        change_octaves(),
+        toggle_sens(),
+        toggle_jouer(),
+        y_division(),
+        classe_division_aimant(),
+    ..computed..
+        nb_divisions(),
+        min_y(),
+        max_y(),
+        nb_colonnes(),
+        largeur_colonne(),
+        cote_diode(),
+        cote_jouer(),
+    ..common..
+    + data(),
+    + created(),
+  }
+  
+  ApplicationFonofone *-- Filtre
+  ApplicationFonofone *-- Metronome
+  ApplicationFonofone *-- Reverberation
+  ApplicationFonofone *-- Selecteur
+  ApplicationFonofone *-- Volume
+  ApplicationFonofone *-- Vitesse
+  ApplicationFonofone *-- Arpegiateur
+}
+
+package "Mixins" {
+  class Wavesurfer {
+    + data(): {...},
+    + paint_region(),
+    + mounted(),
+  }
+
+  class GrapheAudio {
+    data(): {...}
+        mute(),
+        unmute(),
+        toggle_session(),
+        debuter_session(),
+        terminer_session(),
+        ajuster_filtre(),
+    created(),
+    mounted(),
+  }
+
+  class Utils {
+    + props: ['value']
+    + components: {"generique": Generique}
+    + data(): {...}
+        arrondir(),
+        borner(),
+        borner_0_1(),
+        start_drag(),
+        call_drag(),
+        get_mouse_position(),
+        end_drag(),
+        toggle_actif(),
+    + created(),
+    + mounted(),
+  }
+
+  Mixer *-- Wavesurfer
+  Mixer *-- GrapheAudio
+
+  Filtre *-- Utils
+  Metronome *-- Utils
+  Reverberation *-- Utils
+  Selecteur *-- Utils
+  Volume *-- Utils
+  Vitesse *-- Utils
+  Arpegiateur *-- Utils
+}
+
+package "Other" {
+  class Wrapper_Fonofone {
+    + constructor(element, parametres)
+  },
+
+  class Traductions {
+    + locale: 'fr'
+    + messages: {...}
+  },
+}
+
+@enduml

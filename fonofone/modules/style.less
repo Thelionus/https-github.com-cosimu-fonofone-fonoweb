@@ -1,0 +1,512 @@
+@font-face {
+  font-family: 'Helvetica';
+  src:  url('../../fonts/HelveticaNeue-01.woff') format('woff');
+}
+
+@hauteur_header_module: 25px; 
+@temps_transition: 0.5s;
+@padding_module: 10px;
+@jaune: #FFCD00;
+@vert: #A5EB55;
+@vert_fonce: #2D3B1D;
+@mauve: #C814E5;
+@mauve2: #6F2AB7;
+@orange: #F35524;
+@rouge: #F9085A;
+@blanc: white;
+@border_width: 0.02;
+
+.fonofone {
+  .container-modules {
+    position: relative;
+    display: flex;
+
+    &.colonne {
+      flex-direction: column;
+
+      .colonne-modules {
+        padding-right: 0;
+      }
+    }
+
+    &.ligne {
+      flex-direction: row;
+      width: calc(100% - 20px);
+    }
+
+    .module {
+      background-color: @noir;
+      border-radius: 10px;
+      padding: @padding_module;
+      transition: height @temps_transition;
+
+      &.resizing {
+        transition: none;
+      }
+
+      footer {
+        .menu-droite {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          * {
+            margin-right: 10px;
+
+            &:last-child {
+              margin: 0;
+            }
+          }
+        }
+      }
+
+      &.arpegiateur {
+        
+        .diode {
+          fill: @gris;
+          fill-opacity: 1;
+
+          &.flash {
+            fill: @vert;
+          }
+        }
+
+        .cellule {
+          stroke: @vert;
+          stroke-width: 0.01;
+        }
+
+        .division {
+          stroke: @gris;
+          stroke-width: 0.005;
+
+          &.centrale {
+            stroke: @blanc;
+            stroke-width: 0.005;
+            stroke-dasharray: 0.01;
+          }
+
+          &.forte {
+            stroke: @blanc;
+            stroke-width: 0.005;
+          }
+
+          &.cachee {
+            display: none;
+          }
+        }
+
+        .hidden {
+          display: none;
+        }
+
+        .rotate {
+          transform: rotate(90deg);
+        }
+
+        .bg-cadre {
+          stroke: @gris;
+          stroke-width: 0.02;
+          fill: transparent;
+        }
+
+        .bg-colonne {
+          stroke: @gris;
+          stroke-width: 0.005;
+          fill: transparent;
+        }
+
+        .volume {
+          fill: @vert_fonce;
+          fill-opacity: 1;
+        }
+
+        .volume-top {
+          stroke: @vert;
+          stroke-width: 0.025;
+          stroke-linecap: round;
+        }
+
+        .vitesse {
+          fill: @gris;
+          fill-opacity: 0.5;
+        }
+
+        .vitesse-top {
+          stroke: @mauve;
+          stroke-width: 0.025;
+          stroke-linecap: round;
+        }
+
+        .jouer {
+          stroke: @vert;
+          stroke-width: 0.01;
+        }
+
+        .image {
+          filter: invert(0.5);
+
+          &.actif {
+            filter: invert(1);
+          }
+        }
+
+        .sens {
+          transform: rotate(180deg);
+
+          &.inverse {
+            transform: none;
+          }
+        }
+
+        .mode {
+          display: inline-block;
+          width: 20px;
+          padding: 2px 5px;
+
+          border: 1px solid @blanc;
+
+          text-align: center;
+          margin-right: 10px;
+          color: @blanc;
+          cursor: default;
+        }
+      }
+
+      &.filtre {
+
+        // Aspect ratio du module. Par defaut 1:1
+        main {
+          padding-top: 60%;
+        }
+
+        .bg {
+          stroke: @rouge;
+          stroke-width: @border_width;
+          fill: @rouge;
+          fill-opacity: 0.5;
+        }
+
+        .centre {
+          fill: @blanc;
+        }
+
+        .curseur {
+          fill: @rouge;
+          stroke: @blanc;
+          stroke-width: @border_width;
+          fill-opacity: 0.5;
+        }
+      }
+
+      &.volume {
+
+        // Aspect ratio du module. Par defaut 1:1
+        main {
+          padding-top: 60%;
+        }
+
+        footer {
+          justify-content: center;
+        }
+
+        .bg {
+          fill: @vert_fonce;
+        }
+
+        .centre, .ligne {
+          fill: @vert;
+        }
+
+        .curseur {
+          fill: @vert;
+          stroke: @blanc;
+          stroke-width: 2;
+        }
+      }
+
+      &.vitesse {
+
+        // Aspect ratio du module. Par defaut 1:1
+        main {
+          padding-top: 25%;
+        }
+
+        footer {
+
+          .mode {
+            width: 20px;
+            text-align: center;
+            color: @blanc;
+            cursor: default;
+          }
+        }
+
+        .bg {
+          stroke: @mauve;
+          stroke-width: @border_width;
+          fill: @mauve;
+          fill-opacity: 0.5;
+        }
+
+        .coche {
+          fill: @mauve;
+
+          &.cachee {
+            fill-opacity: 0;
+          }
+
+          &.blanc {
+            fill: @blanc;
+          }
+        }
+
+        .curseur {
+          fill: @mauve;
+          stroke: @blanc;
+          stroke-width: @border_width;
+          fill-opacity: 0.5;
+        }
+      }
+
+      &.selecteur {
+
+        main {
+          padding-top: 80%;
+        }
+
+        .bg {
+          fill: @jaune;
+          fill-opacity: 0.5;
+          stroke: @jaune;
+          stroke-width: @border_width;
+          stroke-linejoin: round;
+        }
+
+        .curseur {
+          fill: @jaune;
+          stroke: @blanc;
+          stroke-width: @border_width;
+          stroke-linejoin: round;
+        }
+      }
+
+      &.metronome {
+        .concentrique {
+          fill: @orange;
+          fill-opacity: 0.5;
+        }
+
+        .bg-arc {
+          fill: none;
+          stroke: @orange;
+          stroke-width: 0.1;
+          stroke-opacity: 0;
+        }
+
+        .arc {
+          stroke: @orange;
+          fill: none;
+          stroke-width: 0.01;
+        }
+
+        .affichage_bpm {
+          position: absolute;
+          top: 30%;
+          height: 5%;
+          left: 50%;
+          width: 15%;
+          transform: translate(-50%, -50%);
+
+          background: none;
+          border: none !important;
+
+          text-align: center;
+          color: @blanc;
+        }
+
+        .text-bpm {
+          width: 100%;
+          height: 100%;
+          color: @blanc;
+          font-weight: bold;
+        }
+
+        .curseur-bpm {
+          fill: @blanc;
+        }
+
+        .bordure-images {
+          stroke: @blanc;
+          stroke-width: @border_width;
+          fill-opacity: 0;
+        }
+
+        .image-bg {
+          fill: @orange;
+          fill-opacity: 0.2;
+
+          &.actif {
+            fill-opacity: 1;
+          }
+        }
+
+        .milieu-images {
+          fill: @blanc;
+        }
+
+        .curseur-aleatoire {
+          fill: @orange;
+          stroke: @blanc;
+          stroke-width: @border_width;
+        }
+
+        .ligne-aleatoire {
+          fill: @orange;
+        }
+
+        .hidden {
+          fill-opacity: 0;
+        }
+      }
+
+      &.reverberation {
+
+        // Aspect ratio du module. Par defaut 1:1
+        main {
+          padding-top: 50%;
+        }
+
+        text {
+          font-family: "Helvetica";
+          font-size: 0.3%;
+          font-weight: bold;
+          letter-spacing: 0.05em;
+          fill: @gris;
+        }
+
+        .hidden {
+          fill-opacity: 0;
+        }
+
+        .centre {
+          fill: @mauve2;
+        }
+
+        .curseur {
+          fill: @mauve2;
+          stroke: @blanc;
+          stroke-width: @border_width;
+        }
+
+        .bordure-images, .milieu-images {
+          stroke: @blanc;
+          stroke-width: @border_width;
+        }
+
+        .image-bg {
+          fill: @mauve2;
+          fill-opacity: 0.35;
+
+          &.actif {
+            fill-opacity: 1;
+          }
+        }
+
+        .image {
+          stroke: @blanc;
+          stroke-width: @border_width;
+          fill-opacity: 0.35;
+
+          &.actif {
+            fill-opacity: 1;
+          }
+        }
+      }
+
+      & > header {
+        display: none !important;
+        height: @hauteur_header_module;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h2 {
+          color: @gris;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+        }
+
+        img {
+          filter: invert(50%);
+          transform: rotate(180deg);
+          height: 20px;
+        }
+      }
+
+      & > main {
+        padding-top: 100%;
+        position: relative;
+        transition: height @temps_transition;
+
+        svg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+
+          .controlleur {
+            cursor: move;
+          }
+        }
+      }
+
+      & > footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & > * {
+          margin-top: 10px;
+        }
+
+        img {
+          width: 20px;
+        }
+      }
+    }
+
+    .colonne-modules {
+      padding-right: 5px;
+      column-gap: 10px;
+
+      & > .module {
+        display: inline-block; // Pour eviter les colonnes brisent les modules
+        position: relative;
+        width: calc(100% - 20px);
+        height: initial;
+        margin-bottom: 10px;
+        transform: none;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .colonne-arpegiateur {
+      padding-left: 5px;
+
+      & > .module {
+        display: inline-block; // Pour eviter les colonnes brisent les modules
+        position: relative;
+        width: 100% !important;
+        height: initial !important;
+        transform: none !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "parametres": {
+    "id_source_active": "Boîte à musique",
+    "chemin_source_active": ["local"],
+    "chemin_actif": [],
+    "inverse": false,
+    "jouer": false,
+    "loop": true,
+    "minimiser": true,
+    "mode": "mix",
+    "solo": false,
+    "nom": "defaut"
+  },
+  "modules": {
+    "volume": {
+      "aimant": true,
+      "pan": 0.5,
+      "volume": 0.6667
+    },
+    "selecteur": {
+      "actif": true,
+      "debut": 0,
+      "longueur": 1
+    },
+    "vitesse": {
+      "actif": true,
+      "aimant": false,
+      "mode": 1,
+      "vitesse": 0.5
+    },
+    "filtre": {
+      "actif": true,
+      "debut": 0,
+      "longueur": 1
+    },
+    "reverberation": {
+      "actif": true,
+      "id_impulse": "petit",
+      "wet": 0
+    },
+    "metronome": {
+      "actif": false,
+      "aleatoire": 0,
+      "bpm": 0.3731494423540171,
+      "syncope": 0.5
+    },
+    "arpegiateur": {
+      "actif": false,
+      "aimant": false,
+      "colonnes": [
+        {"vitesse":0.5,"volume":0.5,"jouer":true},
+        {"vitesse":0.5,"volume":0.5,"jouer":true},
+        {"vitesse":0.5,"volume":0.5,"jouer":true},
+        {"vitesse":0.5,"volume":0.5,"jouer":true},
+        {"vitesse":0.5,"volume":0.5,"jouer":true},
+        {"vitesse":0.5,"volume":0.5,"jouer":true},
+        {"vitesse":0.5,"volume":0.5,"jouer":true},
+        {"vitesse":0.5,"volume":0.5,"jouer":true},
+        {"vitesse":0.5,"volume":0.5,"jouer":true},
+        {"vitesse":0.5,"volume":0.5,"jouer":true},
+        {"vitesse":0.5,"volume":0.5,"jouer":true},
+        {"vitesse":0.5,"volume":0.5,"jouer":true}
+      ],
+      "mode": 2,
+      "octaves": 1,
+      "sens": 1
+    }
+  },
+  "banque": null
+}
