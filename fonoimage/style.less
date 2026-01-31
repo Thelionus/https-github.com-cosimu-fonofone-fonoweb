@@ -1,0 +1,532 @@
+@font-face {
+  font-family: 'Helvetica';
+  src:  url('../fonts/HelveticaNeue-01.woff') format('woff');
+}
+
+@blanc: white;
+@blanc_creme: #EFEFEF;
+@gris: grey;
+@noir: black;
+@charcoal: #323232;
+@temps_transition: 0.5s;
+@border_radius: 10px;
+@largeur_menu_vertical: 40px;
+@hauteur_menu: 60px;
+@padding_menu: 14px;
+@hauteur_element_menu: calc(@hauteur_menu - (2 * @padding_menu));
+
+.fonoimage {
+  font-family: "Helvetica";
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: @noir;
+  overflow: hidden;
+
+  input:focus,
+  input:active {
+    outline: auto;
+  }
+
+  .flottant {
+    position: absolute;
+    width: 250px;
+    height: 400px;
+    z-index: 1;
+    top: 0;
+  }
+
+  .gestion-arriere-plan {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 200px;
+    background-color: @blanc_creme;
+    z-index: 999;
+    
+
+
+    &.actif {
+      display: flex;
+    }
+
+    .entete {
+      display: flex;
+      align-items: center;
+      margin: 5px;
+      padding: 5px;
+      font-size: 1em;
+      border-bottom: 1px solid @gris;
+
+      img {
+        height: 20px;
+      }
+
+      span {
+        margin-left: 10px;
+      }
+    }
+
+    .container-arrieres-plans {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 5px;
+      padding: 5px;
+
+      .img {
+        position: relative;
+        width: 30%;
+        height: 50px;
+        margin-right: 3%;
+        margin-bottom: 10px;
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        &:nth-of-type(3) {
+          margin-right: 0;
+        }
+
+        .suppression {
+          position: absolute;
+          height: 10px;
+          right: 0;
+          translate: 50% -50%;
+        }
+      }
+    }
+
+    .importation-images {
+      flex: 1;
+      width: 100%;
+
+      .filepond--root {
+        height: 100%;
+        position: relative;
+        margin: 0;
+
+        .filepond--drop-label {
+          top: 15%;
+          translate: 0 -50%;
+        }
+      }
+    }
+  }
+
+  .panneau-fonoimage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    
+
+    & > menu {
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 0;
+      padding:0;
+      background-color: @charcoal;
+      z-index:1;
+
+      .background_submenu{
+        background:@noir;
+      }
+
+      img {
+        height: 100%;
+        padding: 0px 7px;
+        display:inline-block;
+        cursor:pointer;
+        box-sizing: unset;
+
+        &.invert {
+          filter: invert(1);
+        }
+
+        &.actif {
+          background-color: @charcoal;
+        }
+      }
+
+      .gauche {
+        box-sizing: content-box;
+        height: @hauteur_element_menu;
+        padding:@padding_menu 15px;
+        display:flex;
+        align-items:center;
+
+        .background_btn{
+          margin-right:15px;
+          height:89%;
+        }
+
+        &.pleinecran{
+          margin-right:5px;
+        }
+        
+        .hp{
+          margin-right:5px;
+        }
+
+        > *{
+          margin-right:10px;
+        }
+
+        .oreille{
+          margin-right:5px;
+        }
+
+        #record_btn{
+          box-sizing: content-box;
+          display:inline-block;
+          width: calc(@hauteur_element_menu - 2px);
+          height: calc(@hauteur_element_menu - 2px);
+          padding: 0 7px;
+          cursor:pointer;
+          margin-right:5px;
+  
+          #record_btn_bkg{
+            box-sizing: content-box;
+            background: #fff;
+            border-radius: 35px;
+            padding: 3px;
+            width: calc(100% - 6px);
+            height: calc(100% - 6px);
+          }
+    
+          #record_btn_light{
+            width: 100%;
+            height: 100%;
+            background: #800000;
+            border-radius: 100px;
+            position: relative;
+          }
+    
+          #record_btn_light_active{
+            display:none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 100px;
+          }
+  
+          #record_btn_light_active:after{
+              color: white;
+              font-weight: bold;
+              opacity: 0.8;
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              text-align: center;
+              top: 0px;
+              font-size: 18px;
+              font-family:"Verdana";
+          }
+  
+          &.wait3 #record_btn_light_active{
+            display:block;
+  
+            &:after{
+              content:"3";
+            }
+          }
+          &.wait2 #record_btn_light_active{
+            display:block;
+  
+            &:after{
+              content:"2";
+            }
+          }
+          &.wait1 #record_btn_light_active{
+            display:block;
+  
+            &:after{
+              content:"1";
+            }
+          }
+  
+          &.actif #record_btn_light_active{
+            display:block;
+            background: #F00;
+            animation-name: fadein;
+            animation-timing-function: ease;
+          }
+
+          &.demo{
+            cursor:not-allowed;
+            opacity:0.5;
+          }
+        }
+
+
+        #menu_more_features_wrapper,
+        #menu_parcours_wrapper{
+          display: flex;
+          flex-direction: column-reverse;
+          align-self: flex-start;
+          margin-top:-14px;
+          padding-top:14px;
+        }
+        
+        #menu_more_features_wrapper{
+          margin-right:5px;
+
+          .more_features_btn{
+            height:30px;
+            padding:1px 7px;
+            margin-bottom:14px;
+            width:36px;
+          }
+
+          .more_features_sub_btn{
+            margin:14px 0;
+            width:36px;
+            height:32px;
+          }
+
+          .menu_more_features_subwrapper{
+            display:flex;
+            flex-direction: column;
+          }
+        }
+
+        #menu_parcours_wrapper{
+          margin-right:0px;
+
+          .menu_parcours_subwrapper{
+            display:flex;
+            flex-direction:column;
+          }
+          
+          .menu_parcours_ferme{
+            width:36px;
+            margin-bottom:14px;
+          }
+          
+          .parcours_record_btn{
+            width:36px;
+            height:32px;
+            margin-top:14px;
+            margin-bottom:14px;
+          }
+        }
+
+        .poubelle {
+          margin-left: 20px;
+          padding-left: 20px;
+          border-left: 2px solid black;
+          display: none;
+          background: none !important;
+  
+          &.actif {
+            display: initial;
+          }
+        }
+      }
+
+      .milieu {
+        box-sizing: content-box;
+        height: @hauteur_element_menu;
+        flex-grow:1;
+        padding:@padding_menu 0;
+
+        .texte-nom-fonoimage {
+          padding: 0;
+          border: none;
+          background: none;
+          color: white;
+          font-weight: normal;
+          font-size: 1em;
+          text-align: center;
+          width:100%;
+          height:100%;
+        }
+      }
+
+      .droite{
+        box-sizing: content-box;
+        height: @hauteur_element_menu;
+        padding:@padding_menu 15px;
+
+        img.demo{
+          cursor:not-allowed;
+          opacity:0.5;
+        }
+      }
+
+      .ff_par_defaut {
+        display: none;
+
+        &.actif {
+          display: initial;
+        }
+      }
+
+      .oeil {
+        &.inverted{
+          filter: invert(1);
+        }
+      }
+
+      .oreille {
+        height:121%;
+      }
+
+      .record {
+
+        &.actif {
+          animation-name: flash;
+          animation-duration: 2s;
+          animation-iteration-count: infinite;
+        }
+      }
+
+    }
+
+    .principal {
+      position: relative;
+      display: flex;
+      width: 100%;
+      flex: 1;
+      justify-content: center; // Add this line to center the content horizontally
+      
+
+      //background-size: 100% 100%;
+
+        .app-fonoimage {
+          position: absolute;
+          flex: 1;
+          height: inherit;
+          min-width: 0;
+          
+          
+        }
+      }
+
+    .shadow {
+      position: absolute;
+
+      border: 2px dashed red;
+      display: none;
+
+      &.actif {
+        display: block;
+      }
+    }
+
+    .pellicule {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+
+      pointer-events: none; // Pour interagir avec le canvas
+
+      background-color: rgba(0,0,0,0.5);
+      display: none;
+
+      // Webkit (Chrome / Safari)
+      -webkit-mask-composite: destination-out;
+      -webkit-mask-size: 100% 100%;
+
+      // FF
+      mask-composite: exclude;  
+      mask-size: 100% 100%;
+
+      &.actif {
+        display: initial;
+      }
+    }
+
+    .panneau-importation {
+      position: absolute;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      border: 1px solid @noir;
+      background-color: @gris;
+      display: none;
+
+      &.actif {
+        display: initial;
+      }
+
+      .fenetre {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        bottom: 10px;
+        right: 10px;
+        border: 1px solid @noir;
+        border-radius: @border_radius;
+        overflow: auto;
+
+        .filepond--root {
+          height: 100%;
+          position: relative;
+          margin: 0;
+
+          .filepond--drop-label {
+            top: 10%;
+            translate: 0 -50%;
+          }
+        }
+      }
+    }
+  }
+
+  .fonofone {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    bottom: 100%;
+    overflow:hidden;
+
+    &.affiche {
+      bottom: 0;
+      top: @hauteur_menu;
+    }
+
+    &.minimiser {
+      top: @hauteur_menu;
+      min-width: 325px;
+      width: 33%;
+      height: auto;
+      //background-color: transparent !important;
+    }
+  }
+
+  .inverser {
+    filter: invert(1);
+  }
+}
+
+.no_cursor {
+	cursor: default;
+}
+
+@keyframes flash {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0
+  }
+}
+
+@keyframes fadein {
+  0%{
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "afficher_zones": true,
+  "afficher_oreille": true,
+  "index_arriere_plan": 0,
+  "arrieres_plans": [],
+  "sources": null,
+  "nom": "Fonoimage",
+  "sourdine": false,
+  "general_play": false,
+  "gestion_bg": false,
+  "coords_oreille": {"left":0.5,"top":0.5},
+  "zones": []
+}
